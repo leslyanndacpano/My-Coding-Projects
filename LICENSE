@@ -1,0 +1,53 @@
+-- File: PrescriptionSystem.sql
+
+CREATE TABLE PATIENT (
+    PatientID INT PRIMARY KEY,
+    First_Name VARCHAR(50) NOT NULL,
+    Last_Name VARCHAR(50) NOT NULL,
+    DateOfBirth DATE NOT NULL,
+    Age INT NOT NULL CHECK (Age >= 0 AND Age <= 150),
+    Weight DECIMAL(5,2) CHECK (Weight > 0),
+    ContactInfo BIGINT UNIQUE
+);
+
+INSERT INTO PATIENT (PatientID, First_Name, Last_Name, DateOfBirth, Age, Weight, ContactInfo)
+VALUES 
+(1, 'John', 'Smith', '1990-01-15', 35, 72.5, 9123456780),
+(2, 'Emma', 'Johnson', '1985-06-10', 40, 68.2, 9123456781),
+(3, 'Liam', 'Williams', '2000-03-25', 25, 80.1, 9123456782),
+(4, 'Olivia', 'Brown', '1992-12-30', 32, 59.3, 9123456783),
+(5, 'Noah', 'Jones', '1988-07-12', 37, 75.0, 9123456784);
+
+CREATE TABLE PRESCRIBER (
+    PrescriberID INT PRIMARY KEY,
+    PrescriberName VARCHAR(50) NOT NULL,
+    LicenseNumber INT UNIQUE NOT NULL,
+    ContactInfo BIGINT,
+    DigitalSignature VARCHAR(10) NOT NULL
+);
+
+INSERT INTO PRESCRIBER (PrescriberID, PrescriberName, LicenseNumber, ContactInfo, DigitalSignature)
+VALUES
+(1, 'Dr. Alice Moore', 1001, 9234567001, 'DS001'),
+(2, 'Dr. Brian King', 1002, 9234567002, 'DS002'),
+(3, 'Dr. Clara Reed', 1003, 9234567003, 'DS003'),
+(4, 'Dr. Daniel Scott', 1004, 9234567004, 'DS004'),
+(5, 'Dr. Eva Long', 1005, 9234567005, 'DS005');
+
+CREATE TABLE MEDICATION (
+    MedicationID INT PRIMARY KEY,
+    MedicationName VARCHAR(100) NOT NULL,
+    DrugName VARCHAR(100),
+    Formulation VARCHAR(50),
+    Quantity INT NOT NULL CHECK (Quantity >= 0),
+    DirectionsForUse TEXT,
+    DoseCalculation VARCHAR(255)
+);
+
+INSERT INTO MEDICATION (MedicationID, MedicationName, DrugName, Formulation, Quantity, DirectionsForUse, DoseCalculation)
+VALUES
+(1, 'Paracetamol', 'Acetaminophen', 'Tablet', 20, 'Take 1 tablet every 6 hours', 'Weight*10mg'),
+(2, 'Amoxicillin', 'Amoxicillin', 'Capsule', 30, 'Take 1 capsule every 8 hours', 'Weight*5mg'),
+(3, 'Ibuprofen', 'Ibuprofen', 'Tablet', 15, 'Take 1 tablet every 8 hours', 'Weight*5mg'),
+(4, 'Aspirin', 'Aspirin', 'Tablet', 10, 'Take 1 tablet every 12 hours', 'Weight*3mg'),
+(5, 'Metformin', 'Metformin', 'Tablet', 60, 'Take 1 tablet daily', 'Weight*15mg');
